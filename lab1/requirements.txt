@@ -1,0 +1,5 @@
+Django==6.0.3
+djangorestframework==3.16.1
+Faker==40.8.0
+gunicorn==25.1.0
+psycopg[binary,pool]==3.3.3
