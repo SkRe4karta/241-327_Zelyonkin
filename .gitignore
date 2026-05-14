@@ -1,11 +1,41 @@
+# Python
 venv/
+.venv/
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
-.pytest_cache/
-.mypy_cache/
-.DS_Store
-lab1/db.sqlite3
-lab1/staticfiles/
+*.so
+.Python
+
+# Django
+*.sqlite3
+db.sqlite3
+staticfiles/
+media/
+
+# Environment files
 .env
+*.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test / cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Certificates and private keys
+*.key
+*.crt
+*.csr
+*.srl
+lab2/nginx/certs/

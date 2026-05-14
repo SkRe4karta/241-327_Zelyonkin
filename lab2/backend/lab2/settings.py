@@ -33,7 +33,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'lab1.urls'
+ROOT_URLCONF = 'lab2.urls'
 
 TEMPLATES = [
     {
@@ -50,27 +50,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'lab1.wsgi.application'
+WSGI_APPLICATION = 'lab2.wsgi.application'
 
-
-if os.getenv("POSTGRES_DB"):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv("POSTGRES_DB"),
-            'USER': os.getenv("POSTGRES_USER", "postgres"),
-            'PASSWORD': os.getenv("POSTGRES_PASSWORD", ""),
-            'HOST': os.getenv("POSTGRES_HOST", "localhost"),
-            'PORT': os.getenv("POSTGRES_PORT", "5432"),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("POSTGRES_DB", "lab1db"),
+        'USER': os.getenv("POSTGRES_USER", "labdb"),
+        'PASSWORD': os.getenv("POSTGRES_PASSWORD", "qwertypass"),
+        'HOST': os.getenv("POSTGRES_HOST", "localhost"),
+        'PORT': os.getenv("POSTGRES_PORT", "5432"),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 
 AUTH_PASSWORD_VALIDATORS = [

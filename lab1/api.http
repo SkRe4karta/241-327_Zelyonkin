@@ -1,0 +1,49 @@
+@hostname = http://127.0.0.1:8000
+
+### API root
+GET {{hostname}}/api/
+Accept: application/json
+
+### List football clubs
+GET {{hostname}}/api/football-clubs/
+Accept: application/json
+
+### Create new club
+# @name createClub
+POST {{hostname}}/api/football-clubs/
+Content-Type: application/json
+
+{
+  "name": "My New Club {{$timestamp}}",
+  "country": "Russia",
+  "city": "Moscow",
+  "founded_on": "2001-09-01",
+  "stadium_name": "Code Arena {{$timestamp}}",
+  "stadium_capacity": 45000,
+  "budget_million_eur": "89.50",
+  "website": "https://my-new-club-{{$timestamp}}.example.com",
+  "has_youth_academy": true,
+  "description": "Demo club created from REST Client.",
+  "wins": 19,
+  "losses": 5,
+  "draws": 6,
+  "goals_scored": 61,
+  "goals_conceded": 27
+}
+
+### Retrieve created club
+GET {{hostname}}/api/football-clubs/{{createClub.response.body.$.id}}/
+Accept: application/json
+
+### Update created club
+PATCH {{hostname}}/api/football-clubs/{{createClub.response.body.$.id}}/
+Content-Type: application/json
+
+{
+  "wins": 25,
+  "draws": 2
+}
+
+### Delete created club
+DELETE {{hostname}}/api/football-clubs/{{createClub.response.body.$.id}}/
+Accept: application/json

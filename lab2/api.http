@@ -1,0 +1,68 @@
+@http = http://127.0.0.1
+@https = https://127.0.0.1
+
+
+### HTTP: API root через Nginx на 80
+GET {{http}}/api/
+Content-Type: application/json
+
+
+### HTTPS: API root через Nginx на 443
+GET {{https}}/api/
+Content-Type: application/json
+
+
+### HTTP: List football clubs
+GET {{http}}/api/football-clubs/
+Content-Type: application/json
+
+
+### HTTPS: List football clubs
+GET {{https}}/api/football-clubs/
+Content-Type: application/json
+
+
+### Create football club through HTTP
+POST {{http}}/api/football-clubs/
+Content-Type: application/json
+
+{
+  "name": "Lab2 HTTP FC",
+  "country": "Russia",
+  "city": "Moscow",
+  "founded_on": "2001-05-14",
+  "stadium_name": "HTTP Arena",
+  "stadium_capacity": 45000,
+  "budget_million_eur": "123.45",
+  "website": "https://lab2-http.example.com",
+  "has_youth_academy": true,
+  "description": "Created through Nginx reverse proxy on port 80.",
+  "wins": 10,
+  "losses": 2,
+  "draws": 4,
+  "goals_scored": 35,
+  "goals_conceded": 18
+}
+
+
+### Create football club through HTTPS
+POST {{https}}/api/football-clubs/
+Content-Type: application/json
+
+{
+  "name": "Lab2 HTTPS FC",
+  "country": "Russia",
+  "city": "Moscow",
+  "founded_on": "2002-05-14",
+  "stadium_name": "HTTPS Arena",
+  "stadium_capacity": 47000,
+  "budget_million_eur": "150.00",
+  "website": "https://lab2-https.example.com",
+  "has_youth_academy": true,
+  "description": "Created through Nginx reverse proxy on port 443.",
+  "wins": 12,
+  "losses": 3,
+  "draws": 5,
+  "goals_scored": 42,
+  "goals_conceded": 21
+}

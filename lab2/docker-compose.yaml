@@ -1,0 +1,69 @@
+services:
+  postgres-service:
+    image: postgres:18
+    container_name: lab2-postgres
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migration-service:
+    build:
+      context: ./backend
+    container_name: lab2-migrations
+    env_file:
+      - .env
+    depends_on:
+      postgres-service:
+        condition: service_healthy
+    volumes:
+      - static-data:/app/staticfiles
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput"
+
+  backend-service:
+    build:
+      context: ./backend
+    container_name: lab2-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      postgres-service:
+        condition: service_healthy
+      migration-service:
+        condition: service_completed_successfully
+    volumes:
+      - static-data:/app/staticfiles
+    command: gunicorn lab2.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - "8000"
+
+  nginx-service:
+    build:
+      context: ./nginx
+    container_name: lab2-nginx
+    restart: unless-stopped
+    depends_on:
+      - backend-service
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static-data:/static:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+
+volumes:
+  postgres-data:
+  static-data:
